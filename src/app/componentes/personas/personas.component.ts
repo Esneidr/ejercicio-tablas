@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, viewChild, ViewChildren } from '@angular/core';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { dataPerson } from '../../services/person-service';
 import { TableColumn } from '../../interfaces/table-Columns';
@@ -18,6 +18,8 @@ export class PersonasComponent implements OnInit {
   tableColumns: TableColumn<person>[] = [];
   isLodingPerson = true;
   tableConfig!: TableConfig;
+  personSelected: person[] = [];
+  table = viewChild(TableComponent);
 
   ngOnInit(): void {
     this.getData();
@@ -25,8 +27,12 @@ export class PersonasComponent implements OnInit {
     this.setTableConfig();
   }
 
+  onSendingEmails() {
+    this.table()?.onClearSelection();
+  }
+
   onSelectRows(rows: person[]) {
-   console.log('Datos: ', rows)
+    this.personSelected = rows
   }
 
   setTableConfig() {

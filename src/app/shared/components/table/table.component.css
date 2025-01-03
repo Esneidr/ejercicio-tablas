@@ -5,3 +5,7 @@
 .mat-column-select {
   width: 20px;
 }
+
+.is-selected {
+  background-color: #CECECE;
+}
