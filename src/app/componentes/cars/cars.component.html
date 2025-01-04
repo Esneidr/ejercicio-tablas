@@ -4,3 +4,14 @@
   [config]="tableConfig"
   [isLoading]="isLoadingCar"
 />
+
+<ng-template #colActions let-row>
+  <div class="button-container">
+    <button class="color_blue" matTooltip="Editar" mat-mini-fab (click)="onEditCar(row)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button class="color_red" matTooltip="Borrar" mat-mini-fab (click)="onDeleteCar(row)">
+      <mat-icon>cleaning_services</mat-icon>
+    </button>
+  </div>
+</ng-template>

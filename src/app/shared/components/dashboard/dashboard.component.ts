@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { menuItem } from '../../../interfaces/menuItem';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     MatListModule,
     RouterLink,
     RouterOutlet,
-    RouterLinkActive
+    RouterLinkActive,
+    MatDividerModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',

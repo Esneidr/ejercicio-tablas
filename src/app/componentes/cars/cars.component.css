@@ -2,3 +2,24 @@
   display: block;
   padding: 20px;
 }
+
+.button-container {
+  display: flex;
+  gap: 16px;
+}
+
+.color_blue {
+  background-color: blue;
+}
+
+.color_blue:hover {
+  background-color: #08089a;
+}
+
+.color_red {
+  background-color: red;
+}
+
+.color_red:hover {
+  background-color: #9b0707;
+}

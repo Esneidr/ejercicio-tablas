@@ -5,11 +5,21 @@ import { TableColumn } from '../../interfaces/table-Columns';
 import { person } from '../../interfaces/person';
 import { TableConfig } from '../../interfaces/table-Config';
 import { timer } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'personas',
   standalone: true,
-  imports: [TableComponent],
+  imports: [
+    TableComponent,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatTooltipModule,
+  ],
   templateUrl: './personas.component.html',
   styleUrl: './personas.component.css',
 })
@@ -32,7 +42,7 @@ export class PersonasComponent implements OnInit {
   }
 
   onSelectRows(rows: person[]) {
-    this.personSelected = rows
+    this.personSelected = rows;
   }
 
   setTableConfig() {

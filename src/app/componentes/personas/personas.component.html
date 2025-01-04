@@ -1,4 +1,10 @@
-<button (click)="onSendingEmails()" >Sending</button>
+<button
+  class="color_green"
+  mat-raised-button
+  (click)="onSendingEmails()"
+>Enviar
+  <mat-icon>send</mat-icon>
+</button>
 
 <class-table
   [data]="Persons"

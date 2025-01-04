@@ -15,7 +15,10 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { TableConfig } from '../../../interfaces/table-Config';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
-import { NgClass } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'class-table',
@@ -26,6 +29,10 @@ import { NgClass } from '@angular/common';
     MatPaginatorModule,
     MatCheckboxModule,
     NgClass,
+    NgTemplateOutlet,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
