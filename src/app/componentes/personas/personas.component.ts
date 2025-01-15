@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+//import as * XLSX from 'xlsx';
 
 @Component({
   selector: 'personas',
@@ -35,6 +36,15 @@ export class PersonasComponent implements OnInit {
     this.getData();
     this.setTableColumns();
     this.setTableConfig();
+  }
+
+  getSortingDataAccesor() {
+    return (data: person, sortHeaderId: string) => {
+      if (sortHeaderId === 'dateStart') {
+        return data.dateStart.getMonth();
+      }
+      return (data as unknown as Record<string, any>)[sortHeaderId];
+    }
   }
 
   onSendingEmails() {
@@ -67,16 +77,19 @@ export class PersonasComponent implements OnInit {
         label: 'Nombre',
         def: 'userName',
         content: (row) => row.userName,
+        isSortable: true
       },
       {
         label: 'Apellido',
         def: 'lastName',
         content: (row) => row.lastName,
+        isSortable: true
       },
       {
         label: 'Edad',
         def: 'age',
         content: (row) => row.age.toString(),
+        isSortable: true
       },
       {
         label: 'Telefono',
@@ -87,16 +100,19 @@ export class PersonasComponent implements OnInit {
         label: 'Cuidad',
         def: 'city',
         content: (row) => row.city,
+        isSortable: true
       },
       {
         label: 'Transporte',
         def: 'transport',
         content: (row) => row.transport,
+        isSortable: true
       },
       {
         label: 'Fecha',
-        def: 'dataStart',
-        content: (row) => new Date(row.dateStart).toLocaleDateString('en-US'),
+        def: 'dateStart',
+        content: (row) => new Date(row.dateStart).toLocaleDateString('es-Co'),
+        isSortable: true
       },
     ];
   }

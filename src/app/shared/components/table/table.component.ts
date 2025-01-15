@@ -19,6 +19,9 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+
+type DataAccessor<T> = (data: T, sortHeaderId: string) => string | number
 
 @Component({
   selector: 'class-table',
@@ -32,7 +35,8 @@ import { MatDividerModule } from '@angular/material/divider';
     NgTemplateOutlet,
     MatButtonModule,
     MatDividerModule,
-    MatIconModule
+    MatIconModule,
+    MatSortModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
@@ -55,6 +59,8 @@ export class TableComponent<T> implements OnChanges, AfterViewInit {
   isLoading = input(false);
   selection = new SelectionModel<T>(true, []);
   selectRowEvent = output<T[]>();
+  matSort = viewChild.required(MatSort);
+  sortingDataAccessor = input<DataAccessor<T>>()
 
   private readonly paginator = viewChild(MatPaginator);
 
@@ -62,9 +68,15 @@ export class TableComponent<T> implements OnChanges, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator() ?? null;
+    this.dataSource.sort = this.matSort();
+    if (this.sortingDataAccessor() != undefined) {
+      this.dataSource.sortingDataAccessor = this.sortingDataAccessor() as DataAccessor<T>
+    }
+
   }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data'].currentValue) {
+    if (changes['data']?.currentValue) {
       this.setData();
     }
   }

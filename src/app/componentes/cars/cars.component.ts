@@ -66,21 +66,25 @@ export class CarsComponent implements OnInit {
         label: 'Marca',
         def: 'make',
         content: (row) => row.make,
+        isSortable: true
       },
       {
         label: 'Año',
         def: 'age',
         content: (row) => row.age.toString(),
+        isSortable: true
       },
       {
         label: 'Color',
         def: 'color',
         content: (row) => row.color,
+        isSortable: true
       },
       {
         label: 'Precio',
         def: 'price',
         content: (row) => row.price.toString(),
+        isSortable: true
       },
       {
         label: 'Acción',
