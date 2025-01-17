@@ -1,10 +1,21 @@
-<button
-  class="color_green"
-  mat-raised-button
-  (click)="onSendingEmails()"
->Enviar
-  <mat-icon>send</mat-icon>
-</button>
+<div class="ms-2 gap-3">
+  <button
+    class="color_green mt-2"
+    mat-mini-fab
+    matTooltip="Enviar"
+    (click)="onSendingEmails()"
+  >
+    <mat-icon>send</mat-icon>
+  </button>
+  <button
+    class="color_green ms-2"
+    mat-mini-fab
+    matTooltip="Descargar EXCEL"
+    (click)="downloadExcel()"
+  >
+    <mat-icon>download</mat-icon>
+  </button>
+</div>
 
 <class-table
   [data]="Persons"

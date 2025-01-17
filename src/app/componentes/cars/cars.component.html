@@ -1,3 +1,14 @@
+<div class="mt-2 ms-2">
+  <button
+    class="color_green"
+    mat-mini-fab
+    matTooltip="Descargar EXCEL"
+    (click)="downloadExcel()"
+  >
+    <mat-icon>download</mat-icon>
+  </button>
+</div>
+
 <class-table
   [data]="Cars"
   [column]="tableColumns"
@@ -7,10 +18,20 @@
 
 <ng-template #colActions let-row>
   <div class="button-container">
-    <button class="color_blue" matTooltip="Editar" mat-mini-fab (click)="onEditCar(row)">
+    <button
+      class="color_blue"
+      matTooltip="Editar"
+      mat-mini-fab
+      (click)="onEditCar(row)"
+    >
       <mat-icon>edit</mat-icon>
     </button>
-    <button class="color_red" matTooltip="Borrar" mat-mini-fab (click)="onDeleteCar(row)">
+    <button
+      class="color_red"
+      matTooltip="Borrar"
+      mat-mini-fab
+      (click)="onDeleteCar(row)"
+    >
       <mat-icon>cleaning_services</mat-icon>
     </button>
   </div>

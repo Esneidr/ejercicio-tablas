@@ -1,57 +1,82 @@
-<table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox
-        [checked]="
-          selection.selected.length > 0 &&
-          selection.selected.length === dataSource.data.length
-        "
-        [indeterminate]="
-          selection.selected.length > 0 &&
-          selection.selected.length != dataSource.data.length
-        "
-        (change)="onToggleAll($event.checked)"
-      >
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox
-        [checked]="selection.isSelected(row)"
-        (change)="onSelectRow(row, $event.checked)"
-      ></mat-checkbox>
-    </td>
-  </ng-container>
+<div class="mt-2 ms-2">
+  <div class="button-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Filtro</mat-label>
+      <mat-icon matPrefix>filter_alt</mat-icon>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input />
+    </mat-form-field>
 
-  @for (col of column(); track $index) {
-  <ng-container matColumnDef="{{ col.def }}">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!col.isSortable">{{ col.label }}</th>
-    <td mat-cell *matCellDef="let row">
-
-      @if (col.template) {
-        <ng-container *ngTemplateOutlet="
-          col.template;
-          context: { $implicit: row  }
+    <button
+      class="color_blue"
+      mat-mini-fab
+      matTooltip="Limpiar"
+      (click)="onClear()"
+    >
+      <mat-icon>cleaning_services</mat-icon>
+    </button>
+  </div>
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          [checked]="
+            selection.selected.length > 0 &&
+            selection.selected.length === dataSource.data.length
           "
-        />
-      } @else {
-        {{ col?.content(row) }}
-      }
-    </td>
-  </ng-container>
-  }
+          [indeterminate]="
+            selection.selected.length > 0 &&
+            selection.selected.length != dataSource.data.length
+          "
+          (change)="onToggleAll($event.checked)"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox
+          [checked]="selection.isSelected(row)"
+          (change)="onSelectRow(row, $event.checked)"
+        ></mat-checkbox>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
-  <tr
-    mat-row
-    *matRowDef="let row; columns: displayedColumns()"
-    [ngClass]="{ 'is-selected': selection.isSelected(row) }"
-  ></tr>
-  <tr *matNoDataRow>
-    <td class="noData" [attr.colspan]="displayedColumns().length">
-      @if(isLoading()){ Cargando...!!! }@else { No hay Datos }
-    </td>
-  </tr>
-</table>
+    @for (col of column(); track $index) {
+    <ng-container matColumnDef="{{ col.def }}">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        [disabled]="!col.isSortable"
+      >
+        {{ col.label }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        @if (col.template) {
+        <ng-container
+          *ngTemplateOutlet="col.template; context: { $implicit: row }"
+        />
+        } @else {
+        {{ col?.content(row) }}
+        }
+      </td>
+    </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns()"
+      [ngClass]="{ 'is-selected': selection.isSelected(row) }"
+    ></tr>
+    <tr *matNoDataRow>
+      <td class="noData" [attr.colspan]="displayedColumns().length">
+        @if(isLoading()){ Cargando...!!! } @else { No hay Datos "{{
+          input.value
+        }}" }
+      </td>
+    </tr>
+  </table>
+</div>
+
 @if(config()?.paginator?.showInfo) {
 <mat-paginator
   [pageSizeOptions]="config()?.paginator?.pageSizeOptions ?? [5, 10, 20, 50]"

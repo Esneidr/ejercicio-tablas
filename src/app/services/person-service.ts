@@ -35,7 +35,7 @@ export class dataPerson {
     "Alvarado", "Bustamante", "Arévalo", "Venegas", "Zamora", "Villalobos", "Valle", "Barboza", "Padilla", "Tamayo"
   ];
 
-  private static readonly citys = ["Medellín", "Envigado", "Itagui", "Caldas", "Estrella", "Sabaneta", "Bello",
+  public static readonly citys = ["Medellín", "Envigado", "Itagui", "Caldas", "Estrella", "Sabaneta", "Bello",
     "Copacabana", "Girardota", "Barbosa"
   ];
 

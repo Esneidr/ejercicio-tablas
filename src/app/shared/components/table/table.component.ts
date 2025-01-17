@@ -4,6 +4,7 @@ import {
   computed,
   input,
   OnChanges,
+  OnInit,
   output,
   SimpleChanges,
   viewChild,
@@ -20,6 +21,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 type DataAccessor<T> = (data: T, sortHeaderId: string) => string | number
 
@@ -36,12 +40,15 @@ type DataAccessor<T> = (data: T, sortHeaderId: string) => string | number
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
-    MatSortModule
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTooltipModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
-export class TableComponent<T> implements OnChanges, AfterViewInit {
+export class TableComponent<T> implements OnInit, OnChanges, AfterViewInit {
   config = input<TableConfig>();
   dataSource = new MatTableDataSource<T>();
   data = input<T[]>([]);
@@ -66,6 +73,10 @@ export class TableComponent<T> implements OnChanges, AfterViewInit {
 
   constructor() {}
 
+  ngOnInit(): void {
+    this.dataSource.filterPredicate = this.createFilter();
+  }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator() ?? null;
     this.dataSource.sort = this.matSort();
@@ -78,6 +89,39 @@ export class TableComponent<T> implements OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']?.currentValue) {
       this.setData();
+    }
+  }
+
+  createFilter() {
+    return (data: any, filter: string) : boolean => {
+      const searchData = filter.trim().toLowerCase().split(' ');
+
+      const columnActive = this.column().map(col => col.def);
+
+      const dataString = columnActive
+        .map(columnData => (data[columnData] || '').toString().toLowerCase())
+        .join(' ');
+
+      return searchData.every(tem => dataString.includes(tem))
+    };
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    if (filterValue.length >= 3) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    } else {
+      this.dataSource.filter = '';
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
+  }
+
+  onClear() {
+    this.dataSource.filter = '';
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 

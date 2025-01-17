@@ -9,3 +9,29 @@
 .is-selected {
   background-color: #CECECE;
 }
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}
+
+td, th {
+  width: 25%;
+}
+
+.color_blue {
+  background-color: blue;
+}
+
+.color_blue:hover {
+  background-color: #08089a;
+}
+
+.button-container {
+  display: flex;
+  gap: 16px;
+}

@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
-//import as * XLSX from 'xlsx';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'personas',
@@ -25,6 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './personas.component.css',
 })
 export class PersonasComponent implements OnInit {
+  listExportExcel: any[] = [];
   Persons: person[] = [];
   tableColumns: TableColumn<person>[] = [];
   isLodingPerson = true;
@@ -44,7 +45,7 @@ export class PersonasComponent implements OnInit {
         return data.dateStart.getMonth();
       }
       return (data as unknown as Record<string, any>)[sortHeaderId];
-    }
+    };
   }
 
   onSendingEmails() {
@@ -77,19 +78,19 @@ export class PersonasComponent implements OnInit {
         label: 'Nombre',
         def: 'userName',
         content: (row) => row.userName,
-        isSortable: true
+        isSortable: true,
       },
       {
         label: 'Apellido',
         def: 'lastName',
         content: (row) => row.lastName,
-        isSortable: true
+        isSortable: true,
       },
       {
         label: 'Edad',
         def: 'age',
         content: (row) => row.age.toString(),
-        isSortable: true
+        isSortable: true,
       },
       {
         label: 'Telefono',
@@ -100,27 +101,55 @@ export class PersonasComponent implements OnInit {
         label: 'Cuidad',
         def: 'city',
         content: (row) => row.city,
-        isSortable: true
+        isSortable: true,
       },
       {
         label: 'Transporte',
         def: 'transport',
         content: (row) => row.transport,
-        isSortable: true
+        isSortable: true,
       },
       {
         label: 'Fecha',
         def: 'dateStart',
         content: (row) => new Date(row.dateStart).toLocaleDateString('es-Co'),
-        isSortable: true
+        isSortable: true,
       },
     ];
   }
 
   getData() {
-    timer(1000).subscribe(() => {
+    timer(1500).subscribe(() => {
       this.isLodingPerson = false;
-      this.Persons = dataPerson.getData(200);
+      this.Persons = dataPerson.getData(10000);
     });
+  }
+
+  downloadExcel() {
+    timer(2000).subscribe(() => {
+      this.listExportExcel = this.Persons.map((item) => {
+        return {
+          ['Cedula']: item.identity,
+          ['Nombre']: item.userName,
+          ['Apellido']: item.lastName,
+          ['Edad']: item.age,
+          ['Telefono']: item.phone,
+          ['Cuidad']: item.city,
+          ['Transporte']: item.transport,
+          ['Fecha']: item.dateStart
+        };
+      });
+      this.exportToExcel(this.listExportExcel);
+    });
+  }
+
+  exportToExcel(listExportExcel: any) {
+    // almacena la información que estará en la primera hoja
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(listExportExcel);
+    // generate workbook and add the worksheet
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Transporte');
+    //save to file
+    XLSX.writeFile(wb, 'Reporte.xlsx');
   }
 }

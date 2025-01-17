@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'carros',
@@ -24,6 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './cars.component.css',
 })
 export class CarsComponent implements OnInit {
+  listExportExcel: any[] = [];
   Cars: car[] = [];
   tableColumns: TableColumn<car>[] = [];
   tableConfig!: TableConfig;
@@ -100,4 +102,30 @@ export class CarsComponent implements OnInit {
       this.Cars = dataCars.getData(200);
     });
   }
+
+  downloadExcel() {
+    timer(2000).subscribe(() => {
+      this.listExportExcel = this.Cars.map((item) => {
+        return {
+          ['Placa']: item.plate,
+          ['Marca']: item.make,
+          ['Año']: item.age,
+          ['Color']: item.color,
+          ['Precio']: item.price,
+        };
+      });
+      this.exportToExcel(this.listExportExcel);
+    });
+  }
+
+  exportToExcel(listExportExcel: any) {
+    // almacena la información que estará en la primera hoja
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(listExportExcel)
+    // generate workbook and add the worksheet
+    const wb: XLSX.WorkBook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, 'Vehiculos')
+    //save to file
+    XLSX.writeFile(wb, 'Reporte.xlsx')
+  }
+
 }

@@ -23,3 +23,11 @@
 .color_red:hover {
   background-color: #9b0707;
 }
+
+.color_green {
+  background-color: greenyellow;
+}
+
+.color_green:hover {
+  background-color: green;
+}
