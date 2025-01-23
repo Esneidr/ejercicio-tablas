@@ -37,6 +37,10 @@ export class DashboardComponent {
     {
       label: "Cars",
       route: "/cars"
+    },
+    {
+      label: "Company",
+      route: "/company"
     }
   ]
 

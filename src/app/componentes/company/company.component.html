@@ -1,0 +1,17 @@
+<div class="mt-2 ms-2">
+  <button
+    class="color_green"
+    mat-mini-fab
+    matTooltip="Descargar EXCEL"
+    (click)="downloadExcel()"
+  >
+    <mat-icon>download</mat-icon>
+  </button>
+</div>
+
+<class-table
+  [data]="Company"
+  [column]="tableColumns"
+  [config]="tableConfig"
+  [isLoading]="isLoadingData"
+/>

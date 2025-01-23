@@ -1,0 +1,16 @@
+.color_blue {
+  background-color: blue;
+}
+
+.color_blue:hover {
+  background-color: #08089a;
+}
+
+.color_green {
+  background-color: greenyellow;
+}
+
+.color_green:hover {
+  background-color: green;
+}
+

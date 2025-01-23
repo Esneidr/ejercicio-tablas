@@ -3,78 +3,218 @@ import { companyProject } from '../interfaces/companyProject';
 import { dataPerson } from './person-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CompanyService {
-  private static generatedFullName: string = '';
-  private static generatedState: string = '';
+  private generatedFullName: string = '';
+  private generatedState: string = '';
+  private ageEmployee: number = 18;
 
-  private static readonly nameWomen = [
-    "María", "Ana", "Isabella", "Camila", "Sofía", "Lucía", "Valentina", "Gabriela", "Daniela", "Carolina",
-    "Alejandra", "Mónica", "Patricia", "Andrea", "Fernanda", "Laura", "Claudia", "Susana", "Rosa", "Paula",
-    "Julia", "Antonia", "Victoria", "Verónica", "Elena", "Diana", "Carmen", "Sandra", "Silvia", "Angela",
-    "Lorena", "Cristina", "Mariana", "Natalia", "Adriana", "Alicia", "Luisa", "Inés", "Teresa", "Beatriz",
-    "Marta", "Clara", "Pilar", "Vanessa", "Esther", "Florencia", "Amelia", "Irene", "Gloria", "Eva"
-  ]
+  private readonly nameWomen = [
+    'María',
+    'Ana',
+    'Isabella',
+    'Camila',
+    'Sofía',
+    'Lucía',
+    'Valentina',
+    'Gabriela',
+    'Daniela',
+    'Carolina',
+    'Alejandra',
+    'Mónica',
+    'Patricia',
+    'Andrea',
+    'Fernanda',
+    'Laura',
+    'Claudia',
+    'Susana',
+    'Rosa',
+    'Paula',
+    'Julia',
+    'Antonia',
+    'Victoria',
+    'Verónica',
+    'Elena',
+    'Diana',
+    'Carmen',
+    'Sandra',
+    'Silvia',
+    'Angela',
+    'Lorena',
+    'Cristina',
+    'Mariana',
+    'Natalia',
+    'Adriana',
+    'Alicia',
+    'Luisa',
+    'Inés',
+    'Teresa',
+    'Beatriz',
+    'Marta',
+    'Clara',
+    'Pilar',
+    'Vanessa',
+    'Esther',
+    'Florencia',
+    'Amelia',
+    'Irene',
+    'Gloria',
+    'Eva',
+  ];
 
-  private static readonly nameMen = [
-    "Juan", "Carlos", "José", "Luis", "Pedro", "Miguel", "Daniel", "Alejandro", "David", "Fernando",
-    "Javier", "Ricardo", "Eduardo", "Andrés", "Sergio", "Manuel", "Francisco", "Roberto", "Diego", "Adrián",
-    "Antonio", "Martín", "Cristian", "Felipe", "Héctor", "Gabriel", "Alberto", "Ángel", "Lucas", "Simón",
-    "Enrique", "Raúl", "Mario", "Gonzalo", "Rafael", "Sebastián", "Esteban", "Emilio", "Víctor", "Jorge",
-    "Marcos", "Hugo", "Tomás", "Matías", "Agustín", "Pablo", "Iván", "Ignacio", "Nicolás", "Oscar"
-  ]
+  private readonly nameMen = [
+    'Juan',
+    'Carlos',
+    'José',
+    'Luis',
+    'Pedro',
+    'Miguel',
+    'Daniel',
+    'Alejandro',
+    'David',
+    'Fernando',
+    'Javier',
+    'Ricardo',
+    'Eduardo',
+    'Andrés',
+    'Sergio',
+    'Manuel',
+    'Francisco',
+    'Roberto',
+    'Diego',
+    'Adrián',
+    'Antonio',
+    'Martín',
+    'Cristian',
+    'Felipe',
+    'Héctor',
+    'Gabriel',
+    'Alberto',
+    'Ángel',
+    'Lucas',
+    'Simón',
+    'Enrique',
+    'Raúl',
+    'Mario',
+    'Gonzalo',
+    'Rafael',
+    'Sebastián',
+    'Esteban',
+    'Emilio',
+    'Víctor',
+    'Jorge',
+    'Marcos',
+    'Hugo',
+    'Tomás',
+    'Matías',
+    'Agustín',
+    'Pablo',
+    'Iván',
+    'Ignacio',
+    'Nicolás',
+    'Oscar',
+  ];
 
-  private static readonly lastname = [
-    "García", "Martínez", "López", "Hernández", "González", "Pérez", "Rodríguez", "Sánchez", "Ramírez", "Torres",
-    "Flores", "Rivera", "Gómez", "Vásquez", "Morales", "Jiménez", "Rojas", "Ortiz", "Díaz", "Ruiz",
-    "Álvarez", "Castro", "Romero", "Mendoza", "Silva", "Guerrero", "Núñez", "Cruz", "Reyes", "Chávez",
-    "Ramos", "Medina", "Vega", "Carrillo", "Castillo", "Soto", "Delgado", "Fuentes", "Mejía", "Campos",
-    "Aguilar", "Navarro", "Domínguez", "Correa", "Valencia", "Acosta", "Bautista", "Cabrera", "Maldonado", "Salazar"
-  ]
+  private readonly lastname = [
+    'García',
+    'Martínez',
+    'López',
+    'Hernández',
+    'González',
+    'Pérez',
+    'Rodríguez',
+    'Sánchez',
+    'Ramírez',
+    'Torres',
+    'Flores',
+    'Rivera',
+    'Gómez',
+    'Vásquez',
+    'Morales',
+    'Jiménez',
+    'Rojas',
+    'Ortiz',
+    'Díaz',
+    'Ruiz',
+    'Álvarez',
+    'Castro',
+    'Romero',
+    'Mendoza',
+    'Silva',
+    'Guerrero',
+    'Núñez',
+    'Cruz',
+    'Reyes',
+    'Chávez',
+    'Ramos',
+    'Medina',
+    'Vega',
+    'Carrillo',
+    'Castillo',
+    'Soto',
+    'Delgado',
+    'Fuentes',
+    'Mejía',
+    'Campos',
+    'Aguilar',
+    'Navarro',
+    'Domínguez',
+    'Correa',
+    'Valencia',
+    'Acosta',
+    'Bautista',
+    'Cabrera',
+    'Maldonado',
+    'Salazar',
+  ];
 
-  private static readonly departments = [
-    "Recursos Humanos", "Finanzas y Contabilidad", "Marketing", "Ventas", "Tecnologías de la Información (TIC)",
-    "Producción", "Logística y Operaciones", "Atención al Cliente", "Investigación y Desarrollo (I+D)", "Legal y Compliance",
-    "Compras", "Comunicación Corporativa", "Administración", "Seguridad y Salud Ocupacional", "Sostenibilidad y Responsabilidad Social"
-  ]
+  private readonly departments = [
+    'Recursos Humanos',
+    'Finanzas y Contabilidad',
+    'Marketing',
+    'Ventas',
+    'TIC',
+    'Producción',
+    'Logística y Operaciones',
+    'Atención al Cliente',
+    'Investigación',
+    'Legal',
+    'Compras',
+    'Comunicación Corporativa',
+    'Administración',
+    'Salud Ocupacional',
+    'Sostenibilidad',
+  ];
 
-  private static readonly positions = [
-    "Gerente", "Director", "Analista", "Reclutador", "Diseñador", "Community Manager", "Ejecutivo",
-    "Coordinador", "Auxiliar", "Contador", "Auditor", "Desarrollador", "Administrador", "Supervisor",
-    "Operario", "Logístico", "Abogado", "Asesor", "Consultor", "Call Center", "Gestor"
-  ]
+  private readonly states = [
+    'Activo',
+    'Vacaciones',
+    'Licencia',
+    'Renuncia',
+    'Despedido',
+  ];
 
-  private static readonly studys = [
-    "Especialista", "Ingeniero", "Técnologo", "Técnico", "Bachiller"
-  ]
+  private readonly reason = [
+    'Nuevo trabajo',
+    'Cambio de vivienda',
+    'Bajo rendimiento',
+  ];
 
-  private static readonly states = [
-    "Activo", "Vacaciones", "Licencia", "Renuncia", "Despedido",
-  ]
+  private readonly traineds = ['Si', 'No'];
 
-  private static readonly reason = [
-    "Nuevo trabajo", "Cambio de vivienda", "Bajo rendimiento"
-  ]
+  private readonly areas = ['Administración', 'Servicios', 'Financiera'];
 
-  private static readonly traineds = [
-    "Si", "No"
-  ]
-
-  private static readonly areas = [
-    "Administración", "Servicios", "Financiera"
-  ]
-
-  public static getFullName(): string {
-    const nameEmployees = [...this.nameWomen, ...this.nameMen ];
-    const lastnameEmployess = CompanyService.lastname[dataPerson.getRamdonNumber(0, CompanyService.lastname.length - 1)];
+  public getFullName(): string {
+    const nameEmployees = [...this.nameWomen, ...this.nameMen];
+    const lastnameEmployess = this.lastname[dataPerson.getRamdonNumber(0, this.lastname.length - 1)];
     const randomNames = Math.floor(Math.random() * nameEmployees.length);
 
     this.generatedFullName = nameEmployees[randomNames] + ' ' + lastnameEmployess;
     return this.generatedFullName;
   }
 
-  public static getGender(): string {
+  public getGender(): string {
     const name = this.generatedFullName.split(' ')[0];
 
     if (this.nameWomen.includes(name)) {
@@ -82,49 +222,95 @@ export class CompanyService {
     } else if (this.nameMen.includes(name)) {
       return 'Masculino';
     } else {
-      return 'LGTB'
+      return 'LGTB';
     }
   }
 
-  public static getState(): string {
-    const statesRandom = CompanyService.states[dataPerson.getRamdonNumber(0, CompanyService.states.length - 1)];
+  public getState(): string {
+    const statesRandom = this.states[dataPerson.getRamdonNumber(0, this.states.length - 1)];
     this.generatedState = statesRandom;
 
     return this.generatedState;
   }
 
-  public static getReason(): string {
+  public getReason(): string {
     const state = this.generatedState;
 
-    if (state === "Renuncia" ) {
-      const reason = CompanyService.reason[dataPerson.getRamdonNumber(0, CompanyService.reason.length - 1)];
+    if (state === 'Renuncia') {
+      const reason = this.reason[dataPerson.getRamdonNumber(0, this.reason.length - 1)];
       return reason;
     } else {
-      return '';
+      return 'N/A';
     }
   }
 
-  public getData(number: number): companyProject[] {
-    const companys: companyProject[] = []
+  private generatedDataEmployee(): { age: number; study: string; position: string} {
+    const age  = dataPerson.getRamdonNumber(18, 60);
+    const study = this.getStudy(age);
+    const position = this.getPosition(study);
+    return { age, study, position}
+  }
 
-    for (let i= 1; i <= number; i++ ) {
+  public getData(number: number): companyProject[] {
+    const companys: companyProject[] = [];
+
+    for (let i = 1; i <= number; i++) {
+      const { age, study, position } = this.generatedDataEmployee();
       const model: companyProject = {
-        employee: CompanyService.getFullName(),
-        gender: CompanyService.getGender(),
-        department: CompanyService.departments[dataPerson.getRamdonNumber(0, CompanyService.departments.length - 1)],
-        position: CompanyService.positions[dataPerson.getRamdonNumber(0, CompanyService.positions.length - 1)],
-        study: CompanyService.studys[dataPerson.getRamdonNumber(0, CompanyService.studys.length - 1)],
-        age: dataPerson.getRamdonNumber(20, 60),
-        state: CompanyService.getState(),
-        reason: CompanyService.getReason(),
-        trained: CompanyService.traineds[dataPerson.getRamdonNumber(0, CompanyService.traineds.length -1)],
-        city: dataPerson.citys[dataPerson.getRamdonNumber(0, dataPerson.citys.length -1)],
-        area: CompanyService.areas[dataPerson.getRamdonNumber(0, CompanyService.areas.length -1)],
+        employee: this.getFullName(),
+        gender: this.getGender(),
+        department: this.departments[dataPerson.getRamdonNumber(0, this.departments.length - 1)],
+        position: position,
+        study: study,
+        age: age,
+        state: this.getState(),
+        reason: this.getReason(),
+        trained: this.traineds[dataPerson.getRamdonNumber(0, this.traineds.length - 1)],
+        city: dataPerson.citys[dataPerson.getRamdonNumber(0, dataPerson.citys.length - 1)],
+        area: this.areas[dataPerson.getRamdonNumber(0, this.areas.length - 1)],
       };
-      companys.push(model)
+      companys.push(model);
     }
     return companys;
   }
 
 
+  //#region Metodos publicos
+  public getStudy(age: number): string {
+    let study: string
+
+    if (age <= 20) {
+      study = 'Bachiller';
+    } else if (age <= 23) {
+      study = 'Técnico';
+    } else if (age <= 26) {
+      study = 'Técnologo';
+    } else if (age <= 35) {
+      study = 'Ingeniero';
+    } else {
+      study = 'Especialista';
+    }
+      return study;
+  }
+
+  public getPosition(study: string): string {
+
+    // Separo por listas los traboajos según el nivel Educatico
+    const positionsMap: { [key: string]: string[] } = {
+      'Bachiller': ['Call Center', 'Operario', 'Seguridad'],
+      'Técnico': ['Operario', 'Asesor', 'Consultor', 'Gestor', 'Logístico'],
+      'Técnologo': ['Logístico', 'Desarrollador', 'Supervisor', 'Auxiliar', 'Contador', 'Diseñador', 'Community Manager'],
+      'Ingeniero': ['Reclutador', 'Ejecutivo', 'Auditor', 'Administrador', 'Abogado'],
+      'Especialista': ['Director', 'Analista', 'Coordinador'],
+    };
+
+    // Escoger el lista de trabajos según el estudio
+    const possibleJobs = positionsMap[study];
+
+    // Selecciona un trabajo aleatorio de la lista
+    const randomIndex = dataPerson.getRamdonNumber(0, possibleJobs.length - 1);
+    return possibleJobs[randomIndex];
+
+  }
+  //#endregion
 }
