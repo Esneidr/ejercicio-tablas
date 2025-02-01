@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>{{ data ? "Edit" : "Add" }} User</h2>
+<mat-dialog-content>
+  <form [formGroup]="formPerson">
+    <div class="row col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Identity</mat-label>
+        <mat-icon>badge</mat-icon>
+        <input matInput placeholder="Identity" formControlName="identity" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <mat-icon>person</mat-icon>
+        <input matInput placeholder="Name" formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>LastName</mat-label>
+        <mat-icon>account_circle</mat-icon>
+        <input matInput placeholder="LastName" formControlName="lastName" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Age</mat-label>
+        <mat-icon>calendar_today</mat-icon>
+        <input matInput placeholder="Age" formControlName="age" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <mat-icon>phone</mat-icon>
+        <input matInput placeholder="Phone" formControlName="phone" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <mat-icon>location_city</mat-icon>
+        <input matInput placeholder="City" formControlName="city" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Transport</mat-label>
+        <mat-icon>directions_car</mat-icon>
+        <input matInput placeholder="Transport" formControlName="transport" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <mat-icon>event</mat-icon>
+        <input matInput placeholder="01/01/2025" formControlName="date" />
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-raised-button mat-dialog-close>Cancel</button>
+  <button type="button" mat-raised-button [mat-dialog-close]="formPerson.value">
+    Ok
+  </button>
+</mat-dialog-actions>

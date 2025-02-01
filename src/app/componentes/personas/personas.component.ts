@@ -1,4 +1,10 @@
-import { Component, OnInit, viewChild, ViewChildren } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { dataPerson } from '../../services/person-service';
 import { TableColumn } from '../../interfaces/table-Columns';
@@ -10,6 +16,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import * as XLSX from 'xlsx';
+import { DialogService } from '../../shared/services/dialog.service';
+import { AddEditPersonComponent } from '../../shared/components/add-edit-person/add-edit-person.component';
+import { ValidatedDialogComponent } from '../../shared/components/validated-dialog/validated-dialog.component';
 
 @Component({
   selector: 'personas',
@@ -25,6 +34,8 @@ import * as XLSX from 'xlsx';
   styleUrl: './personas.component.css',
 })
 export class PersonasComponent implements OnInit {
+  private readonly dialog = inject(DialogService);
+
   listExportExcel: any[] = [];
   Persons: person[] = [];
   tableColumns: TableColumn<person>[] = [];
@@ -32,11 +43,68 @@ export class PersonasComponent implements OnInit {
   tableConfig!: TableConfig;
   personSelected: person[] = [];
   table = viewChild(TableComponent);
+  colActions = viewChild.required('colActions', { read: TemplateRef });
 
   ngOnInit(): void {
     this.getData();
     this.setTableColumns();
     this.setTableConfig();
+  }
+
+  addPerson() {
+    this.dialog
+      .open(AddEditPersonComponent)
+      .afterClosed()
+      .subscribe({
+        next: (user) => {
+          if (!user) return;
+            const dialogRef = this.dialog.openDialog({
+            type: 'success',
+            title: 'Add user',
+            message: 'has been added successfully!'
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 3000);
+        },
+      });
+  }
+
+  deletePerson(persons: person) {
+    this.dialog.openDialog({
+      type: 'warning',
+      title: 'Delete user',
+      message: `Are you sure you want to delete ${persons.userName}?`,
+      buttons: {
+        primary: {
+          show: true,
+          label: 'Delete'
+        },
+        secondary: {
+          show: true,
+          label: 'Cancel'
+        }
+      }
+    })
+  }
+
+  editPerson(persons: person) {
+    this.dialog
+      .open(AddEditPersonComponent, { data : persons})
+      .afterClosed()
+      .subscribe({
+        next: (value) => {
+          if (!value) return;
+          const dialogRef = this.dialog.openDialog({
+            type: 'success',
+            title: 'Person Updated',
+            message:`${persons.userName} has been updated successfully.`
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 3000);
+        },
+      });
   }
 
   getSortingDataAccesor() {
@@ -115,13 +183,18 @@ export class PersonasComponent implements OnInit {
         content: (row) => new Date(row.dateStart).toLocaleDateString('es-Co'),
         isSortable: true,
       },
+      {
+        label: 'Acción',
+        def: 'action',
+        template: this.colActions(),
+      },
     ];
   }
 
   getData() {
     timer(1500).subscribe(() => {
       this.isLodingPerson = false;
-      this.Persons = dataPerson.getData(10000);
+      this.Persons = dataPerson.getData(100);
     });
   }
 
@@ -136,7 +209,7 @@ export class PersonasComponent implements OnInit {
           ['Telefono']: item.phone,
           ['Cuidad']: item.city,
           ['Transporte']: item.transport,
-          ['Fecha']: item.dateStart
+          ['Fecha']: item.dateStart,
         };
       });
       this.exportToExcel(this.listExportExcel);

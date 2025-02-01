@@ -2,10 +2,10 @@
   <button
     class="color_green mt-2"
     mat-mini-fab
-    matTooltip="Enviar"
-    (click)="onSendingEmails()"
+    matTooltip="Añadir"
+    (click)="addPerson()"
   >
-    <mat-icon>send</mat-icon>
+    <mat-icon>person_add</mat-icon>
   </button>
   <button
     class="color_green ms-2"
@@ -25,3 +25,24 @@
   [sortingDataAccessor]="getSortingDataAccesor()"
   (selectRowEvent)="onSelectRows($event)"
 />
+
+<ng-template #colActions let-row>
+  <div class="button-container">
+    <button
+      class="color_blue"
+      matTooltip="Editar"
+      mat-mini-fab
+      (click)="editPerson(row)"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+    class="color_red"
+    matTooltip="Eliminar"
+    mat-mini-fab
+    (click)="deletePerson(row)"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+  </div>
+</ng-template>

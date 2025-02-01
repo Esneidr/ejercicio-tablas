@@ -126,7 +126,7 @@ export class CompanyComponent implements OnInit {
   getData() {
     timer(1500).subscribe(() => {
       this.isLoadingData = false;
-      this.Company = this._company.getData(100000);
+      this.Company = this._company.getData(100);
     });
   }
 

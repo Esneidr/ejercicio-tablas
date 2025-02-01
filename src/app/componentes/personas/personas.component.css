@@ -3,11 +3,32 @@
   padding: 20px;
 }
 
+.color_blue {
+  background-color: blue;
+}
+
+.color_blue:hover {
+  background-color: #08089a;
+}
+
 .color_green {
   background-color: #14a714;
 }
 
 .color_green:hover {
   background-color: #008000;
+}
+
+.color_red {
+  background-color: red;
+}
+
+.color_red:hover {
+  background-color: #9b0707;
+}
+
+.button-container {
+  display: flex;
+  gap: 16px;
 }
 

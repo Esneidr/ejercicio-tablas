@@ -1,0 +1,14 @@
+.warning {
+  background-color: orangered;
+  color: white;
+}
+
+.success {
+  background-color: green;
+  color: white;
+}
+
+.error {
+  background-color: red;
+  color: white;
+}

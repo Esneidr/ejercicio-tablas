@@ -99,7 +99,7 @@ export class CarsComponent implements OnInit {
   getData() {
     timer(1500).subscribe(() => {
       this.isLoadingCar = false;
-      this.Cars = dataCars.getData(200);
+      this.Cars = dataCars.getData(5);
     });
   }
 
